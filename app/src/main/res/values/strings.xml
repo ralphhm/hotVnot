@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">hotVnot</string>
+    <string name="title_activity_selection">Selection</string>
+    <string name="title_activity_review">Review</string>
+    <string name="review">Review</string>
+    <string name="start">Start</string>
+</resources>
