@@ -29,7 +29,10 @@ class SelectionActivity : AppCompatActivity() {
         loadingContent.visibility = if (state is SelectionState.Loading) VISIBLE else GONE
         selectionGroup.visibility = if (state is SelectionState.Selection) VISIBLE else GONE
         actionReview.visibility = if (state is SelectionState.Final) VISIBLE else GONE
-        counter.text = (state as? SelectionState.Selection)?.articles?.size.toString()
+        (state as? SelectionState.Selection)?.let {
+            articleImage.setImageURI(it.article.url)
+            counter.text = it.likeCounter
+        }
     }
 
 }
