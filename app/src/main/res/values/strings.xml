@@ -4,4 +4,6 @@
     <string name="title_activity_review">Review</string>
     <string name="review">Review</string>
     <string name="start">Start</string>
+    <string name="dislike">Dislike</string>
+    <string name="like">Like</string>
 </resources>
