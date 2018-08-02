@@ -10,4 +10,6 @@ class Article(@Json(name = "sku") val sku: String,
     @JsonClass(generateAdapter = true)
     class Media(@Json(name = "uri") val uri: String)
 
+    val imageUri get() = media.first().uri
+
 }
