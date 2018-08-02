@@ -47,7 +47,10 @@ class SelectionActivity : AppCompatActivity() {
         is ArticleRateState.AllRated -> {
             selectionGroup.visibility = GONE
             actionReview.visibility = VISIBLE
-            actionReview.setOnClickListener { startActivity<ReviewActivity>() }
+            actionReview.setOnClickListener {
+                startActivity<ReviewActivity>()
+                finish()
+            }
         }
     }
 
