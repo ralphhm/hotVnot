@@ -3,6 +3,7 @@ ext {
     koin_version = '0.9.2'
     moshi_version = '1.6.0'
     retrofit_version = '2.4.0'
+    groupie_version = '2.1.0'
 }
 
 apply plugin: 'com.android.application'
@@ -25,6 +26,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt')
         }
+    }
+    dataBinding {
+        enabled = true
     }
 }
 
@@ -53,6 +57,10 @@ dependencies {
 
     //Fresco
     implementation 'com.facebook.fresco:fresco:1.9.0'
+
+    //Groupie
+    implementation "com.xwray:groupie:$groupie_version"
+    implementation "com.xwray:groupie-databinding:$groupie_version"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

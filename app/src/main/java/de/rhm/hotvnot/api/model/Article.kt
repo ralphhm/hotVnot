@@ -5,6 +5,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 class Article(@Json(name = "sku") val sku: String,
+              @Json(name = "title") val title: String,
               @Json(name = "media") val media: List<Media>) {
 
     @JsonClass(generateAdapter = true)

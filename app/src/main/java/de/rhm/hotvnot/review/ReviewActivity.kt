@@ -5,11 +5,12 @@ import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.GridLayoutManager
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
-import android.widget.TextView
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Section
+import com.xwray.groupie.ViewHolder
 import de.rhm.hotvnot.R
 import de.rhm.hotvnot.review.ReviewViewModel.UiState.Loading
 import de.rhm.hotvnot.review.ReviewViewModel.UiState.Result
@@ -22,31 +23,26 @@ const val EXTRA_LIKED_ARTICLES_SKUS = "likedArticleSkus"
 class ReviewActivity : AppCompatActivity() {
 
     private val viewModel by viewModel<ReviewViewModel>(parameters = { mapOf("skus" to intent.getStringArrayListExtra(EXTRA_LIKED_ARTICLES_SKUS)) })
+    private val section = Section()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_review)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        articleList.adapter = GroupAdapter<ViewHolder>().apply {
+            add(section)
+        }
         viewModel.uiStates.observe(this, Observer { onStateChanged(it!!) })
     }
 
     private fun onStateChanged(state: ReviewViewModel.UiState) {
         loadingContent.visibility = if (state is Loading) VISIBLE else GONE
         articleList.visibility = if (state is Result) VISIBLE else GONE
-        if (state is Result) articleList.adapter = ArticleAdapter(state.articleItems)
-    }
-
-}
-
-class ArticleAdapter(val articles: List<ArticleItem>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = object : RecyclerView.ViewHolder(TextView(parent.context)) {}
-
-    override fun getItemCount() = articles.size
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder.itemView as TextView).text = "${articles[position].selected}"
+        if (state is Result) {
+            (articleList.layoutManager as GridLayoutManager).spanCount = state.columnCount
+            section.update(state.articleItems)
+        }
     }
 
 }
