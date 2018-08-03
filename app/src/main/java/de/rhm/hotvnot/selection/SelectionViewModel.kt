@@ -12,18 +12,18 @@ class SelectionViewModel(service: Home24Service) : ViewModel() {
     val uiStates = MutableLiveData<UiState>()
 
     init {
-        service.getArticlesForCategory()
+        service.getArticlesForCategory100()
                 .map { ArticlesRating(it.embedded.articles) }
                 .map<UiState> { UiState.Rating(it.articleState) }
                 .toObservable().startWith(UiState.Loading)
                 .subscribe { uiStates.postValue(it) }
     }
 
-}
+    sealed class UiState {
+        object Loading : UiState()
+        class Rating(val articleRateState: LiveData<ArticleRateState>) : UiState()
+    }
 
-sealed class UiState {
-    object Loading : UiState()
-    class Rating(val articleRateState: LiveData<ArticleRateState>) : UiState()
 }
 
 class ArticlesRating(private val articles: List<Article>) {
@@ -33,7 +33,7 @@ class ArticlesRating(private val articles: List<Article>) {
     val articleState = MutableLiveData<ArticleRateState>().apply { postValue(state) }
 
     private val state
-        get() = if (index == articles.size) ArticleRateState.AllRated(articles, likedArticles) else
+        get() = if (index == articles.size) ArticleRateState.AllRated(likedArticles) else
             ArticleRateState.Rating(articles[index].imageUri, likedArticles.size, articles.size, { like() }, { dislike() })
 
     private fun like() {
@@ -53,5 +53,5 @@ sealed class ArticleRateState {
         val likeCounter get() = "$likeCount/$total"
     }
 
-    class AllRated(val articles: List<Article>, val likedArticles: List<String>) : ArticleRateState()
+    class AllRated(val likedArticles: List<String>) : ArticleRateState()
 }

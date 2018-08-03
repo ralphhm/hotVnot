@@ -9,5 +9,5 @@ private const val ARTICLE_LIMIT = 10
 interface Home24Service {
 
     @GET("categories/100/articles?appDomain=1&locale=de_DE&limit=$ARTICLE_LIMIT")
-    fun getArticlesForCategory(): Single<ArticlesForCategoryResponse>
+    fun getArticlesForCategory100(): Single<ArticlesForCategoryResponse>
 }

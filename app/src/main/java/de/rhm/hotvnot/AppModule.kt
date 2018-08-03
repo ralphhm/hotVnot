@@ -2,6 +2,7 @@ package de.rhm.hotvnot
 
 import com.squareup.moshi.Moshi
 import de.rhm.hotvnot.api.Home24Service
+import de.rhm.hotvnot.review.ReviewViewModel
 import de.rhm.hotvnot.selection.SelectionViewModel
 import io.reactivex.schedulers.Schedulers
 import org.koin.android.architecture.ext.viewModel
@@ -25,5 +26,7 @@ val AppModule = applicationContext {
     }
 
     viewModel { SelectionViewModel(get()) }
+
+    viewModel { params -> ReviewViewModel(get(), params["skus"]) }
 
 }

@@ -7,6 +7,8 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import de.rhm.hotvnot.R
 import de.rhm.hotvnot.review.ReviewActivity
+import de.rhm.hotvnot.review.startReviewActivity
+import de.rhm.hotvnot.selection.SelectionViewModel.UiState
 import de.rhm.hotvnot.startActivity
 import kotlinx.android.synthetic.main.activity_selection.*
 import kotlinx.android.synthetic.main.content_selection.*
@@ -48,7 +50,7 @@ class SelectionActivity : AppCompatActivity() {
             selectionGroup.visibility = GONE
             actionReview.visibility = VISIBLE
             actionReview.setOnClickListener {
-                startActivity<ReviewActivity>()
+                startReviewActivity(ArrayList(state.likedArticles))
                 finish()
             }
         }

@@ -8,4 +8,26 @@
     tools:context=".review.ReviewActivity"
     tools:showIn="@layout/activity_review">
 
+    <android.support.constraint.Guideline
+        android:id="@+id/horizontal_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <ProgressBar
+        android:id="@+id/loadingContent"
+        style="?android:progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/horizontal_center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/articleList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="android.support.v7.widget.GridLayoutManager" />
+
 </android.support.constraint.ConstraintLayout>
