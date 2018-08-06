@@ -13,8 +13,11 @@ class ReviewViewModel(service: Home24Service, private val likedArticleSkus: List
     init {
         service.getArticlesForCategory100()
                 .map { it.embedded.articles }
+                // map to reusable RatedArticle
                 .map { articles -> articles.map { RatedArticle(it.title, it.imageUri, likedArticleSkus.contains(it.sku)) } }
+                // expose state with rated articles using list representation
                 .map<UiState> { articles -> UiState.Result(articles, Presentation.List) { resultState -> uiStates.postValue(resultState) } }
+                // emit loading state while fetching articles
                 .toObservable().startWith(UiState.Loading)
                 .subscribe { uiStates.postValue(it) }
     }
@@ -29,6 +32,9 @@ class ReviewViewModel(service: Home24Service, private val likedArticleSkus: List
 
 }
 
+/**
+ * Map rated article to article item using the current presentation mode
+ */
 fun RatedArticle.toItem(presentation: Presentation) = when (presentation) {
     Presentation.Grid -> ArticleGridItem(this)
     Presentation.List -> ArticleListItem(this)

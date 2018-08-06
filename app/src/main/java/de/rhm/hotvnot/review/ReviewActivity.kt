@@ -11,6 +11,7 @@ import android.view.View.VISIBLE
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Section
 import com.xwray.groupie.ViewHolder
+import de.rhm.hotvnot.PARAM_SKUS
 import de.rhm.hotvnot.R
 import de.rhm.hotvnot.review.ReviewViewModel.UiState.Loading
 import de.rhm.hotvnot.review.ReviewViewModel.UiState.Result
@@ -22,7 +23,7 @@ const val EXTRA_LIKED_ARTICLES_SKUS = "likedArticleSkus"
 
 class ReviewActivity : AppCompatActivity() {
 
-    private val viewModel by viewModel<ReviewViewModel>(parameters = { mapOf("skus" to intent.getStringArrayListExtra(EXTRA_LIKED_ARTICLES_SKUS)) })
+    private val viewModel by viewModel<ReviewViewModel>(parameters = { mapOf(PARAM_SKUS to intent.getStringArrayListExtra(EXTRA_LIKED_ARTICLES_SKUS)) })
     private val section = Section()
 
     override fun onCreate(savedInstanceState: Bundle?) {

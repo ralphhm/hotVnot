@@ -6,4 +6,5 @@
     <string name="start">Start</string>
     <string name="dislike">Dislike</string>
     <string name="like">Like</string>
+    <string name="no_articles_to_vote">There are no more articles left to vote.</string>
 </resources>

@@ -12,6 +12,8 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 
+const val PARAM_SKUS = "skus"
+
 val AppModule = applicationContext {
 
     bean<Moshi> { Moshi.Builder().build() }
@@ -27,6 +29,6 @@ val AppModule = applicationContext {
 
     viewModel { SelectionViewModel(get()) }
 
-    viewModel { params -> ReviewViewModel(get(), params["skus"]) }
+    viewModel { params -> ReviewViewModel(get(), params[PARAM_SKUS]) }
 
 }

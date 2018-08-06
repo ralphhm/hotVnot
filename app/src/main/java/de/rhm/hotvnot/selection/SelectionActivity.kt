@@ -6,10 +6,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import de.rhm.hotvnot.R
-import de.rhm.hotvnot.review.ReviewActivity
 import de.rhm.hotvnot.review.startReviewActivity
 import de.rhm.hotvnot.selection.SelectionViewModel.UiState
-import de.rhm.hotvnot.startActivity
 import kotlinx.android.synthetic.main.activity_selection.*
 import kotlinx.android.synthetic.main.content_selection.*
 import org.koin.android.architecture.ext.viewModel
@@ -24,7 +22,6 @@ class SelectionActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         viewModel.uiStates.observe(this, Observer { onStateChanged(it!!) })
-        actionReview.setOnClickListener { startActivity<ReviewActivity>() }
     }
 
     private fun onStateChanged(state: UiState) {
@@ -32,7 +29,7 @@ class SelectionActivity : AppCompatActivity() {
         if (state is UiState.Rating) {
             state.articleRateState.observe(this@SelectionActivity, Observer { onArticleRateStateChanged(it!!) })
         } else {
-            actionReview.visibility = GONE
+            reviewGroup.visibility = GONE
             selectionGroup.visibility = GONE
         }
     }
@@ -40,7 +37,7 @@ class SelectionActivity : AppCompatActivity() {
     private fun onArticleRateStateChanged(state: ArticleRateState) = when (state) {
         is ArticleRateState.Rating -> {
             selectionGroup.visibility = VISIBLE
-            actionReview.visibility = GONE
+            reviewGroup.visibility = GONE
             articleImage.setImageURI(state.imageUrl)
             counter.text = state.likeCounter
             actionLike.setOnClickListener { state.likeAction.invoke() }
@@ -48,7 +45,7 @@ class SelectionActivity : AppCompatActivity() {
         }
         is ArticleRateState.AllRated -> {
             selectionGroup.visibility = GONE
-            actionReview.visibility = VISIBLE
+            reviewGroup.visibility = VISIBLE
             actionReview.setOnClickListener {
                 startReviewActivity(ArrayList(state.likedArticles))
                 finish()
