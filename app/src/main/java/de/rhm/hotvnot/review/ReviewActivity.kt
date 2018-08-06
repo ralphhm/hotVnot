@@ -39,9 +39,12 @@ class ReviewActivity : AppCompatActivity() {
     private fun onStateChanged(state: ReviewViewModel.UiState) {
         loadingContent.visibility = if (state is Loading) VISIBLE else GONE
         articleList.visibility = if (state is Result) VISIBLE else GONE
+        fab.visibility = if (state is Result) VISIBLE else GONE
         if (state is Result) {
-            (articleList.layoutManager as GridLayoutManager).spanCount = state.columnCount
+            (articleList.layoutManager as GridLayoutManager).spanCount = state.presentation.columnCount
             section.update(state.articleItems)
+            fab.setImageResource(state.presentation.oppositeActionIcon)
+            fab.setOnClickListener { state.switchPresentation.invoke() }
         }
     }
 
